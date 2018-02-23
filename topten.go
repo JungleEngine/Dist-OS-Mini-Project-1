@@ -7,8 +7,11 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
+	"strings"
 	"sort"
+	"bufio"
 )
 
 // Implementing sort interface.
@@ -49,7 +52,43 @@ func sortKeys(m map[int]int) []int {
 // Calculates top 10 most followed for input file
 // and returns array of user id (int) for top 10.
 func topTen(dataInput string) []int {
+
+	//creating user object
+	var users SortUser
+	//current number of users
+	users.Followers = map[int]int{}
+
+	visitedUsers := map[int]bool{}
+	// filling follower map
+	// read from input file
+	file, _ := os.Open(dataInput)
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		words := strings.Fields(line)
+		//string to int
+		id_1, _ := strconv.Atoi(words[0])
+		id_2, _ := strconv.Atoi(words[1])
+		users.Followers[id_2]++
+		// check if user is not added to keys , then add it
+		if !visitedUsers[id_1] {
+		visitedUsers[id_1] = true
+		users.Keys = append(users.Keys, id_1)
+
+		}
+		if !visitedUsers[id_2] {
+			visitedUsers[id_2] = true
+			users.Keys = append(users.Keys, id_2)
+
+		}
+	}
+	fmt.Println(len(users.Followers))
+
 	// TODO: Implement topTen function.
+	//TODO: 1- read file 2- fill follower map 3-fill keys array
 	return nil
 }
 
