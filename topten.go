@@ -3,15 +3,15 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
-	"sort"
-	"bufio"
 )
 
 // Implementing sort interface.
@@ -32,7 +32,7 @@ func (su *SortUser) Less(i, j int) bool {
 
 // Swaps two keys in keys array.
 func (su *SortUser) Swap(i, j int) {
-	su.Keys[i],su.Keys[j] = su.Keys[j],su.Keys[i]
+	su.Keys[i], su.Keys[j] = su.Keys[j], su.Keys[i]
 }
 
 // Sorts Keys based on number of followers in descending order.
@@ -58,7 +58,6 @@ func topTen(dataInput string) []int {
 	//current number of users
 	users.Followers = map[int]int{}
 
-	visitedUsers := map[int]bool{}
 	// filling follower map
 	// read from input file
 	file, _ := os.Open(dataInput)
@@ -70,26 +69,18 @@ func topTen(dataInput string) []int {
 		line := scanner.Text()
 		words := strings.Fields(line)
 		//string to int
-		id_1, _ := strconv.Atoi(words[0])
 		id_2, _ := strconv.Atoi(words[1])
 		users.Followers[id_2]++
 		// check if user is not added to keys , then add it
-		if !visitedUsers[id_1] {
-		visitedUsers[id_1] = true
-		users.Keys = append(users.Keys, id_1)
 
-		}
-		if !visitedUsers[id_2] {
-			visitedUsers[id_2] = true
-			users.Keys = append(users.Keys, id_2)
-
-		}
 	}
-	fmt.Println(len(users.Followers))
+	//sort keys of users
+	users.Keys = sortKeys(users.Followers)
+	//topTenKeys := make([]int, 10)
 
 	// TODO: Implement topTen function.
 	//TODO: 1- read file 2- fill follower map 3-fill keys array
-	return nil
+	return users.Keys[0:10]
 }
 
 // Connects to remote service through internet to convert user id
