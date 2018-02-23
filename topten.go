@@ -42,7 +42,14 @@ func sortKeys(m map[int]int) []int {
 // Calculates top 10 most followed for input file
 // and returns array of user id (int) for top 10.
 func topTen(dataInput string) []int {
+	// read from input file
+	file, err := os.Open(dataInput)
+	defer file.Close()
+	for scanner.Scan() {
+		line := scanner.Text()
+	}
 	// TODO: Implement topTen function.
+	//TODO: 1- read file 2- fill follower map 3-fill keys array
 	return nil
 }
 
@@ -69,7 +76,7 @@ func getUsername(userId string) string {
 
 func main() {
 	fmt.Println("Calculating top 10 most followed...")
-	topId := topTen("input.txt")
+	topId := topTen("dataset.txt")
 	fmt.Println("topTen length: ", len(topId))
 
 	fmt.Println("Getting and printing screen name for top 10...")
