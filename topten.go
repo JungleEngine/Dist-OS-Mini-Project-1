@@ -86,7 +86,8 @@ func topTen(dataInput string) []int {
 // Connects to remote service through internet to convert user id
 // to username.
 func getUsername(userId string) string {
-	response, err := http.PostForm("http://tweeterid.com/ajax.php",
+
+	response, err := http.PostForm("https://tweeterid.com/ajax.php",
 		url.Values{"input": {userId}})
 	if err != nil {
 		fmt.Println("Error getting username("+userId+"): ", err)
@@ -99,8 +100,10 @@ func getUsername(userId string) string {
 		return ""
 	}
 	if string(body) == "error" {
+		//fmt.Println("error -> ", body)
 		return ""
 	}
+
 	return string(body)
 }
 
