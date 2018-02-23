@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"sort"
 )
 
 // Implementing sort interface.
@@ -18,38 +19,37 @@ type SortUser struct {
 
 // Gets length of map.
 func (su *SortUser) Len() int {
-	// TODO: Implement Len function.
-	return 0
+	return len(su.Followers)
 }
 
 // Condition for sorting to compare between values of keys.
 func (su *SortUser) Less(i, j int) bool {
-	// TODO: Implement Less function.
-	return false
+	return su.Followers[i] > su.Followers[j]
 }
 
 // Swaps two keys in keys array.
 func (su *SortUser) Swap(i, j int) {
-	// TODO: Implement Swap function.
+	su.Keys[i],su.Keys[j] = su.Keys[j],su.Keys[i]
 }
 
 // Sorts Keys based on number of followers in descending order.
 func sortKeys(m map[int]int) []int {
-	// TODO: Implement sortKeys function.
-	return nil
+	su := new(SortUser)
+	su.Followers = m
+	su.Keys = make([]int, len(m))
+	i := 0
+	for key, _ := range m {
+		su.Keys[i] = key
+		i++
+	}
+	sort.Sort(su)
+	return su.Keys
 }
 
 // Calculates top 10 most followed for input file
 // and returns array of user id (int) for top 10.
 func topTen(dataInput string) []int {
-	// read from input file
-	file, err := os.Open(dataInput)
-	defer file.Close()
-	for scanner.Scan() {
-		line := scanner.Text()
-	}
 	// TODO: Implement topTen function.
-	//TODO: 1- read file 2- fill follower map 3-fill keys array
 	return nil
 }
 
