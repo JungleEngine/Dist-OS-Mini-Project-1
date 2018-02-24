@@ -39,12 +39,13 @@ func (su *SortUser) Swap(i, j int) {
 func sortKeys(m map[int]int) []int {
 	su := new(SortUser)
 	su.Followers = m
-	su.Keys = make([]int, len(m))
+	su.Keys = make([]int, len(m)+1)
 	i := 0
 	for key, _ := range m {
 		su.Keys[i] = key
 		i++
 	}
+
 	sort.Sort(su)
 	return su.Keys
 }
@@ -80,6 +81,7 @@ func topTen(dataInput string) []int {
 
 	// TODO: Implement topTen function.
 	//TODO: 1- read file 2- fill follower map 3-fill keys array
+	//fmt.Println(users.Followers[users.Keys[len(users.Keys)-1]])
 	return users.Keys[0:10]
 }
 
