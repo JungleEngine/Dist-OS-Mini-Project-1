@@ -12,6 +12,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"math"
 )
 
 // Implementing sort interface.
@@ -44,7 +45,7 @@ func sortKeys(m map[int]int) []int {
 	for key, _ := range m {
 		su.Keys[i] = key
 		i++
-	}	
+	}
 	sort.Sort(su)
 	return su.Keys
 }
@@ -80,14 +81,9 @@ func topTen(dataInput string) []int {
 	}
 	//sort keys of users
 	users.Keys = sortKeys(users.Followers)
-	//topTenKeys := make([]int, 10)
 
-	// TODO: Implement topTen function.
-	//TODO: 1- read file 2- fill follower map 3-fill keys array
-	//fmt.Println(users.Followers[users.Keys[len(users.Keys)-1]])
-	//fmt.Println(users.Keys)
-	//fmt.Println(users.Followers)
-	return users.Keys[0:10]
+	//return top 10 (or less than 10 if the followed peoples < 10)
+	return users.Keys[0:int64(math.Min(float64(len(users.Keys)),float64(10)))]
 }
 
 // Connects to remote service through internet to convert user id
