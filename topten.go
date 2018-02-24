@@ -111,7 +111,7 @@ func getUsername(userId string) string {
 
 func main() {
 	fmt.Println("Calculating top 10 most followed...")
-	topId := topTen("dataset.txt")
+	topId := topTen("ds.txt")
 	fmt.Println("topTen length: ", len(topId))
 
 	fmt.Println("Getting and printing screen name for top 10...")
