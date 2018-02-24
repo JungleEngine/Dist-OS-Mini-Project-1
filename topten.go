@@ -27,7 +27,7 @@ func (su *SortUser) Len() int {
 
 // Condition for sorting to compare between values of keys.
 func (su *SortUser) Less(i, j int) bool {
-	return su.Followers[i] > su.Followers[j]
+	return su.Followers[i] < su.Followers[j]
 }
 
 // Swaps two keys in keys array.
@@ -45,8 +45,9 @@ func sortKeys(m map[int]int) []int {
 		su.Keys[i] = key
 		i++
 	}
-
+	fmt.Println(su.Keys)
 	sort.Sort(su)
+	fmt.Println(su.Keys)
 	return su.Keys
 }
 
@@ -81,7 +82,7 @@ func topTen(dataInput string) []int {
 
 	// TODO: Implement topTen function.
 	//TODO: 1- read file 2- fill follower map 3-fill keys array
-	//fmt.Println(users.Followers[users.Keys[len(users.Keys)-1]])
+	//fmt.Println(users.Followers[users.Keys[0]])
 	return users.Keys[0:10]
 }
 
