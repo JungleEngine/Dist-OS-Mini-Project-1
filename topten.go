@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"net/url"
 	"os"
@@ -84,7 +85,9 @@ func topTen(dataInput string) []int {
 	}
 	//sort keys of users
 	users.Keys = sortKeys(users.Followers)
-	return users.Keys[0:10]
+	//return top 10 (or less than 10 if the followed peoples < 10)
+	return users.Keys[0:int64(math.Min(float64(len(users.Keys)), float64(10)))]
+
 }
 
 // Connects to remote service through internet to convert user id
