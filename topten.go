@@ -27,7 +27,7 @@ func (su *SortUser) Len() int {
 
 // Condition for sorting to compare between values of keys.
 func (su *SortUser) Less(i, j int) bool {
-	return su.Followers[i] > su.Followers[j]
+	return su.Followers[su.Keys[i]] > su.Followers[su.Keys[j]]
 }
 
 // Swaps two keys in keys array.
@@ -44,8 +44,7 @@ func sortKeys(m map[int]int) []int {
 	for key, _ := range m {
 		su.Keys[i] = key
 		i++
-	}
-
+	}	
 	sort.Sort(su)
 	return su.Keys
 }
@@ -61,8 +60,12 @@ func topTen(dataInput string) []int {
 
 	// filling follower map
 	// read from input file
-	file, _ := os.Open(dataInput)
+	file, err := os.Open(dataInput)
+	if err != nil {
+		fmt.Println(err)
+	}
 	defer file.Close()
+
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 
@@ -82,6 +85,8 @@ func topTen(dataInput string) []int {
 	// TODO: Implement topTen function.
 	//TODO: 1- read file 2- fill follower map 3-fill keys array
 	//fmt.Println(users.Followers[users.Keys[len(users.Keys)-1]])
+	//fmt.Println(users.Keys)
+	//fmt.Println(users.Followers)
 	return users.Keys[0:10]
 }
 
@@ -111,7 +116,7 @@ func getUsername(userId string) string {
 
 func main() {
 	fmt.Println("Calculating top 10 most followed...")
-	topId := topTen("ds.txt")
+	topId := topTen("dataset.txt")
 	fmt.Println("topTen length: ", len(topId))
 
 	fmt.Println("Getting and printing screen name for top 10...")
